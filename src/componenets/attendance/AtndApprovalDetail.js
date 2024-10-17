@@ -135,7 +135,7 @@ const AtndApprovalDetail = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(params),
     };
-    fetch("/getAtndData", requestOptions)
+    fetch(process.env.REACT_APP_BACKEND_URL + "/getAtndData", requestOptions)
       //レスポンスをjsonとして受け取りjsオブジェクトを生成
       //生成したjsオブジェクトをdataに代入
       .then((res) => res.json())
@@ -197,7 +197,10 @@ const AtndApprovalDetail = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(params),
     };
-    fetch("/approvalAtndData", requestOptions)
+    fetch(
+      process.env.REACT_APP_BACKEND_URL + "/approvalAtndData",
+      requestOptions
+    )
       //レスポンスをjsonとして受け取りjsオブジェクトを生成
       //生成したjsオブジェクトをdataに代入
       .then((res) => res.json())

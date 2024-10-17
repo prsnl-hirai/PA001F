@@ -126,7 +126,10 @@ const AtndAdminMain = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(params),
     };
-    await fetch("/getForAdminAtndData", requestOptions)
+    await fetch(
+      process.env.REACT_APP_BACKEND_URL + "/getForAdminAtndData",
+      requestOptions
+    )
       .then((res) => res.json())
       .then((json) => {
         let newAppliedData = [];

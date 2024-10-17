@@ -112,9 +112,9 @@ const AtndRegist = () => {
   const [isApproved, setIsApproved] = useState(false);
 
   // 表示年
-  const [dispYear, setDispYear] = useState < String > "";
+  const [dispYear, setDispYear] = useState("");
   // 表示月
-  const [dispMonth, setDispMonth] = useState < String > "";
+  const [dispMonth, setDispMonth] = useState("");
 
   // 月末申請ボタン表示
   const [isDispApplyBtn, setIsDispApplyBtn] = useState(false);
@@ -189,7 +189,7 @@ const AtndRegist = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(params),
     };
-    fetch("/getAtndData", requestOptions)
+    fetch(process.env.REACT_APP_BACKEND_URL + "/getAtndData", requestOptions)
       //レスポンスをjsonとして受け取りjsオブジェクトを生成
       //生成したjsオブジェクトをdataに代入
       .then((res) => res.json())
@@ -431,7 +431,7 @@ const AtndRegist = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(params),
     };
-    fetch("/saveAtndData", requestOptions)
+    fetch(process.env.REACT_APP_BACKEND_URL + "/saveAtndData", requestOptions)
       .then((res) => res.json())
       .then((json) => {
         alert("勤怠情報を登録しました");
