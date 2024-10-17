@@ -11,7 +11,7 @@ import ListItemText from "@mui/material/ListItemText";
 import Typography from "@mui/material/Typography";
 
 import ScheduleIcon from "@mui/icons-material/Schedule";
-// import DnsRoundedIcon from "@material-ui/icons/DnsRounded";
+import DnsRoundedIcon from "@mui/icons-material/DnsRounded";
 import TimerIcon from "@mui/icons-material/Timer";
 import SettingsIcon from "@mui/icons-material/Settings";
 import ComputerIcon from "@mui/icons-material/Computer";
@@ -28,11 +28,6 @@ const item = {
     bgcolor: "rgba(255, 255, 255, 0.08)",
   },
 };
-
-// interface ListItemProps {
-//   setSelectedMenuIndex: (newState: number) => void;
-// }
-// type CombinedProps = DrawerProps & ListItemProps;
 
 export default function Navigator(props) {
   const { ...other } = props;
@@ -53,7 +48,7 @@ export default function Navigator(props) {
           {
             index: 1,
             title: "勤務パターン登録",
-            icon: <ScheduleIcon />,
+            icon: <DnsRoundedIcon />,
             path: "/patternRegist",
             active: false,
           },
