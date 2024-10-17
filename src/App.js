@@ -1,4 +1,5 @@
 import SignIn from "./componenets/SignIn";
+import Info from "./componenets/Info";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Main from "./componenets/Main";
 
