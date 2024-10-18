@@ -5,9 +5,9 @@ import Main from "./componenets/Main";
 // import UpdatePassword from "./componenets/UpdatePassword";
 import AtndRegist from "./componenets/attendance/AtndRegist";
 // import PatternRegist from "./componenets/PatternRegist";
-// import AtndAdminMain from "./componenets/attendance";
-// import AtndApprovalDetail from "./componenets/attendance/AtndApprovalDetail";
-// import SkillSheetMain from "./componenets/skillsheet";
+import AtndAdminMain from "./componenets/attendance";
+import AtndApprovalDetail from "./componenets/attendance/AtndApprovalDetail";
+import SkillSheetMain from "./componenets/skillsheet";
 
 const App = () => {
   return (
@@ -18,10 +18,10 @@ const App = () => {
         <Route path={`/`} Component={Main}>
           <Route index Component={Info} />
           <Route path="/atndRegist" Component={AtndRegist} />
-          {/* <Route path="/patternRegist" Component={PatternRegist} />
+          {/* <Route path="/patternRegist" Component={PatternRegist} /> */}
           <Route path="/atndAdmin" Component={AtndAdminMain} />
           <Route path="/atndAdmin/unapproved" Component={AtndApprovalDetail} />
-          <Route path="/skillsheet" Component={SkillSheetMain} /> */}
+          <Route path="/skillsheet" Component={SkillSheetMain} /> *
         </Route>
       </Routes>
     </BrowserRouter>

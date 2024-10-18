@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import TextField from "@material-ui/core/TextField";
-import AppBar from "@material-ui/core/AppBar";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
-import Badge from "@material-ui/core/Badge";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
+import TextField from "@mui/material/TextField";
+import AppBar from "@mui/material/AppBar";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Badge from "@mui/material/Badge";
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
 
 // icon
 import IconButton from "@mui/material/IconButton";
@@ -20,44 +22,20 @@ import UnapprovedList from "./UnapprovedList";
 import UnappliedList from "./UnappliedList";
 import ApprovedList from "./ApprovedList";
 
-const useStyles = makeStyles((theme) =>
-  createStyles({
-    root: {
-      width: "100%",
+// カスタムテーマ
+const theme = createTheme({
+  palette: {
+    secondary: {
+      main: "#f50057",
     },
-    paper: {
-      width: "100%",
-      marginBottom: theme.spacing(2),
-    },
-    table: {
-      minWidth: 750,
-    },
-    visuallyHidden: {
-      border: 0,
-      clip: "rect(0 0 0 0)",
-      height: 1,
-      margin: -1,
-      overflow: "hidden",
-      padding: 0,
-      position: "absolute",
-      top: 20,
-      width: 1,
-    },
-    blueCell: {
-      color: "#3f51b5 !important",
-    },
-    redCell: {
-      color: "#ff1744 !important",
-    },
-  })
-);
+  },
+});
 
 /**
  * メイン画面
  */
 const AtndAdminMain = () => {
   const location = useLocation();
-  const classes = useStyles();
 
   // 表示年
   const [dispYear, setDispYear] = useState("");
@@ -271,79 +249,91 @@ const AtndAdminMain = () => {
 
   return (
     <>
-      <div className={classes.root}>
+      <div
+        style={{
+          display: "flex",
+          lineHeight: "35px",
+          marginBottom: "10px",
+        }}
+      >
+        <IconButton
+          onClick={() => {
+            setIsLoading(true);
+            onClickBack();
+          }}
+        >
+          <ArrowLeftIcon fontSize="large" />
+        </IconButton>
+        <TextField
+          type="month"
+          value={`${dispYear}-${dispMonth}`}
+          slotProps={{
+            input: {
+              style: {
+                backgroundColor: "#f0f0f0",
+              },
+              min: maxDispDate,
+            },
+          }}
+          onChange={(e) => {
+            if (e.target.value === "") return;
+            let date = e.target.value.split("-");
+            let year = date[0];
+            let month = date[1];
+            setDispYear(year);
+            setDispMonth(month.padStart(2, "0"));
+
+            setIsLoading(true);
+            setTimeout(() => {
+              getForAdminAtndData(year, month);
+            }, 200);
+          }}
+          style={{ marginTop: "8px" }}
+          size="small"
+        />
+        <IconButton
+          onClick={() => {
+            setIsLoading(true);
+            onClickNext();
+          }}
+          disabled={`${dispYear}-${dispMonth}` === maxDispDate}
+        >
+          <ArrowRightIcon fontSize="large" />
+        </IconButton>
+      </div>
+      {isLoading ? (
         <div
           style={{
             display: "flex",
-            lineHeight: "35px",
-            marginBottom: "10px",
+            justifyContent: "center",
+            padding: "50px",
           }}
         >
-          <IconButton
-            onClick={() => {
-              setIsLoading(true);
-              onClickBack();
-            }}
-          >
-            <ArrowLeftIcon fontSize="large" />
-          </IconButton>
-          <TextField
-            type="month"
-            value={`${dispYear}-${dispMonth}`}
-            inputProps={{
-              max: maxDispDate,
-            }}
-            onChange={(e) => {
-              if (e.target.value === "") return;
-              let date = e.target.value.split("-");
-              let year = date[0];
-              let month = date[1];
-              setDispYear(year);
-              setDispMonth(month.padStart(2, "0"));
-
-              setIsLoading(true);
-              setTimeout(() => {
-                getForAdminAtndData(year, month);
-              }, 200);
-            }}
-            style={{ marginTop: "8px" }}
-          />
-          <IconButton
-            onClick={() => {
-              setIsLoading(true);
-              onClickNext();
-            }}
-            disabled={`${dispYear}-${dispMonth}` === maxDispDate}
-          >
-            <ArrowRightIcon fontSize="large" />
-          </IconButton>
+          <CircularProgress />
         </div>
-        {isLoading ? (
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              padding: "50px",
-            }}
-          >
-            <CircularProgress />
-          </div>
-        ) : (
-          <AtndAdminTabs
-            dispYear={dispYear}
-            dispMonth={dispMonth}
-            value={value}
-            appliedData={appliedData}
-            unappliedData={unappliedData}
-            approvedData={approvedData}
-            handleChange={handleChange}
-            getForAdminAtndData={getForAdminAtndData}
-          />
-        )}
-      </div>
+      ) : (
+        <AtndAdminTabs
+          dispYear={dispYear}
+          dispMonth={dispMonth}
+          value={value}
+          appliedData={appliedData}
+          unappliedData={unappliedData}
+          approvedData={approvedData}
+          handleChange={handleChange}
+          getForAdminAtndData={getForAdminAtndData}
+        />
+      )}
     </>
   );
 };
+
+const StyledTabs = styled(Tabs)({
+  "& .MuiTabs-indicator": {
+    backgroundColor: "#f50057", // カスタム色
+    height: "1px", // インジケーターの太さを調整
+    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.3)", // 影を追加
+  },
+});
 
 function AtndAdminTabs(props) {
   const {
@@ -358,42 +348,47 @@ function AtndAdminTabs(props) {
   } = props;
 
   return (
-    <div>
-      <AppBar position="static">
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          aria-label="simple tabs example"
-        >
-          <Tab
-            label={
-              <Badge badgeContent={appliedData.length} color="error">
-                承認待ち&nbsp;&nbsp;
-              </Badge>
-            }
-            id="tab1"
-            aria-controls="tabpanel1"
-          />
-          <Tab
-            label={
-              <Badge badgeContent={unappliedData.length} color="error">
-                未申請&nbsp;&nbsp;
-              </Badge>
-            }
-            id="tab2"
-            aria-controls="tabpanel2"
-          />
-          <Tab
-            label={
-              <Badge badgeContent={approvedData.length} color="error">
-                承認済み&nbsp;&nbsp;
-              </Badge>
-            }
-            id="tab3"
-            aria-controls="tabpanel3"
-          />
-        </Tabs>
-      </AppBar>
+    <ThemeProvider theme={theme}>
+      <Box sx={{ bgcolor: "background.paper" }}>
+        <AppBar position="static">
+          <StyledTabs
+            value={value}
+            onChange={handleChange}
+            variant="fullWidth"
+            textColor="inherit"
+            indicatorColor="secondary"
+            sx={{ width: "500px" }}
+          >
+            <Tab
+              label={
+                <Badge badgeContent={appliedData.length} color="error">
+                  承認待ち&nbsp;&nbsp;&nbsp;
+                </Badge>
+              }
+              id="tab1"
+              aria-controls="tabpanel1"
+            />
+            <Tab
+              label={
+                <Badge badgeContent={unappliedData.length} color="error">
+                  未申請&nbsp;&nbsp;&nbsp;
+                </Badge>
+              }
+              id="tab2"
+              aria-controls="tabpanel2"
+            />
+            <Tab
+              label={
+                <Badge badgeContent={approvedData.length} color="error">
+                  承認済み&nbsp;&nbsp;&nbsp;
+                </Badge>
+              }
+              id="tab3"
+              aria-controls="tabpanel3"
+            />
+          </StyledTabs>
+        </AppBar>
+      </Box>
       {value === 0 && (
         <UnapprovedList
           dispYear={dispYear}
@@ -416,7 +411,7 @@ function AtndAdminTabs(props) {
           dispData={approvedData}
         />
       )}
-    </div>
+    </ThemeProvider>
   );
 }
 

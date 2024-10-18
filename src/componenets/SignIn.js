@@ -73,7 +73,6 @@ export default function SignIn(props) {
   const [isErrPasswd, setIsErrPasswd] = useState(false);
 
   const login = () => {
-    console.log("aaaa");
     if (userId === "") {
       setIsErrUserId(true);
     } else {
@@ -85,7 +84,8 @@ export default function SignIn(props) {
       setIsErrPasswd(false);
     }
     if (userId === "" || passwd === "") {
-      alert("入力してー");
+      if (userId === "") alert("ユーザーIDを入力してください");
+      if (passwd === "") alert("パスワードを入力してください");
     } else {
       const requestOptions = {
         method: "POST",
@@ -156,108 +156,45 @@ export default function SignIn(props) {
               gap: 2,
             }}
           >
-            {/* <FormControl>
-              <FormLabel htmlFor="email">
-                社員コードまたはメールアドレス
-              </FormLabel>
-              <TextField
-                error={emailError}
-                helperText={emailErrorMessage}
-                id="email"
-                type="email"
-                name="email"
-                placeholder="your@email.com"
-                autoComplete="email"
-                autoFocus
-                required
-                fullWidth
-                variant="outlined"
-                color={emailError ? "error" : "primary"}
-                sx={{ ariaLabel: "email" }}
-              />
-            </FormControl> */}
-            <FormControl
-              fullWidth
+            <TextField
+              label="社員コードまたはメールアドレス"
+              color="primary"
+              value={userId}
               error={isErrUserId}
-              variant="outlined"
-              margin="normal"
-            >
-              <InputLabel htmlFor="outlined-adornment-userId">
-                社員コードまたはメールアドレス
-              </InputLabel>
-              <OutlinedInput
-                id="outlined-adornment-userId"
-                type="text"
-                required
-                label="社員コードまたはメールアドレス"
-                value={userId}
-                error={isErrUserId}
-                onChange={(e) => {
-                  setUserId(e.target.value);
-                }}
-                onKeyDown={(e) => {
-                  if (e.code === "Enter") login();
-                }}
-                labelWidth={250}
-              />
-            </FormControl>
-            {/* <FormControl>
-              <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                <FormLabel htmlFor="password">パスワード</FormLabel>
-                <Link
-                  component="button"
-                  type="button"
-                  onClick={handleClickOpen}
-                  variant="body2"
-                  sx={{ alignSelf: "baseline" }}
-                >
-                  パスワードを忘れた場合
-                </Link>
-              </Box>
-              <TextField
-                error={passwordError}
-                helperText={passwordErrorMessage}
-                name="password"
-                placeholder="••••••"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                autoFocus
-                required
-                fullWidth
-                variant="outlined"
-                color={passwordError ? "error" : "primary"}
-              />
-            </FormControl> */}
-            <FormControl
-              fullWidth
-              error={isErrPasswd}
-              variant="outlined"
-              margin="normal"
-            >
-              <InputLabel htmlFor="outlined-adornment-password">
-                パスワード
-              </InputLabel>
-              <OutlinedInput
-                id="outlined-adornment-password"
-                type="password"
-                required
-                label="パスワード"
-                value={passwd}
-                error={isErrPasswd}
-                onChange={(e) => {
-                  setPasswd(e.target.value);
-                }}
-                onKeyDown={(e) => {
-                  if (e.code === "Enter") login();
-                }}
-              />
-            </FormControl>
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
+              onChange={(e) => {
+                setUserId(e.target.value);
+              }}
+              onKeyDown={(e) => {
+                if (e.code === "Enter") login();
+              }}
+              slotProps={{
+                inputLabel: {
+                  shrink: true,
+                },
+              }}
+              sx={{ marginTop: "15px" }}
             />
-            {/* <ForgotPassword open={open} handleClose={handleClose} /> */}
+
+            <TextField
+              label="パスワード"
+              color="primary"
+              type="password"
+              value={passwd}
+              error={isErrPasswd}
+              onChange={(e) => {
+                setPasswd(e.target.value);
+              }}
+              onKeyDown={(e) => {
+                if (e.code === "Enter") login();
+              }}
+              slotProps={{
+                inputLabel: {
+                  shrink: true,
+                },
+              }}
+              sx={{ marginTop: "10px" }}
+            />
+            <Link href="#">パスワードを忘れた場合</Link>
             <Button fullWidth variant="contained" onClick={login}>
               ログイン
             </Button>

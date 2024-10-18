@@ -1,31 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import clsx from "clsx";
-import {
-  createStyles,
-  lighten,
-  makeStyles,
-  Theme,
-} from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import Toolbar from "@material-ui/core/Toolbar";
-import Paper from "@material-ui/core/Paper";
-import Checkbox from "@material-ui/core/Checkbox";
-import Button from "@material-ui/core/Button";
+import { createStyles, makeStyles } from "@mui/styles";
+import { lighten } from "@mui/material/styles";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Toolbar from "@mui/material/Toolbar";
+import Paper from "@mui/material/Paper";
+import Checkbox from "@mui/material/Checkbox";
+import Button from "@mui/material/Button";
 
 import ComfirmDialog from "../common/ComfirmDialog";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
-    root: {
-      paddingLeft: theme.spacing(2),
-      paddingRight: theme.spacing(1),
-    },
     highlight:
       theme.palette.type === "light"
         ? {
@@ -42,7 +34,6 @@ const useStyles = makeStyles((theme) =>
     paper: {
       width: "100%",
       marginBottom: theme.spacing(2),
-      padding: theme.spacing(2),
     },
     table: {
       minWidth: 750,
@@ -143,12 +134,12 @@ const UnapprovedList = (props) => {
 
   return (
     <>
-      <Paper className={classes.paper} style={{ height: windowHeight - 210 }}>
-        <Toolbar
-          className={clsx(classes.root, {
-            [classes.highlight]: selectedData.length > 0,
-          })}
-        >
+      <Paper
+        className={classes.paper}
+        style={{ height: windowHeight - 210 }}
+        square
+      >
+        <div style={{ padding: "10px 20px" }}>
           <Button
             variant="contained"
             color="primary"
@@ -163,7 +154,7 @@ const UnapprovedList = (props) => {
           >
             一括承認
           </Button>
-        </Toolbar>
+        </div>
         <TableContainer>
           <Table
             className={classes.table}

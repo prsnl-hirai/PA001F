@@ -1,40 +1,28 @@
 import React, { useState, useEffect, ReactElement } from "react";
 import { Document, Page, PDFDownloadLink } from "@react-pdf/renderer";
 import clsx from "clsx";
-import {
-  createStyles,
-  lighten,
-  makeStyles,
-  Theme,
-} from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import Toolbar from "@material-ui/core/Toolbar";
-import Paper from "@material-ui/core/Paper";
-import Checkbox from "@material-ui/core/Checkbox";
-import Button from "@material-ui/core/Button";
+import { createStyles, makeStyles } from "@mui/styles";
+import { lighten } from "@mui/material/styles";
+
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Toolbar from "@mui/material/Toolbar";
+import Paper from "@mui/material/Paper";
+import Checkbox from "@mui/material/Checkbox";
+import Button from "@mui/material/Button";
 
 // icon
-import PictureAsPdfIcon from "@material-ui/icons/PictureAsPdf";
-import GridOnIcon from "@material-ui/icons/GridOn";
+import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
+import GridOnIcon from "@mui/icons-material/GridOn";
 
 import * as CONST from "../../common/const";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
-    root: {
-      width: "100%",
-    },
-    toolbar: {
-      paddingTop: theme.spacing(2),
-      paddingBottom: theme.spacing(1),
-      paddingLeft: theme.spacing(1),
-      paddingRight: theme.spacing(1),
-    },
     title: {
       flex: "1 1 100%",
     },
@@ -456,7 +444,7 @@ const ApprovedList = (props) => {
     return <MyDocument />;
   };
 
-  const [pdfContent, setPdfContent] = (useState < ReactElement) | (null > null);
+  const [pdfContent, setPdfContent] = useState(null);
   const handleConvertClick = async (workbook, name) => {
     const pdf = await convertToPDF(workbook, name);
     setPdfContent(pdf);
@@ -523,11 +511,41 @@ const ApprovedList = (props) => {
   }, []);
 
   return (
-    <Paper className={classes.paper} style={{ height: windowHeight - 210 }}>
-      <EnhancedTableToolbar
-        selectedData={selectedData}
-        bulkOutputExcel={bulkOutputExcel}
-      />
+    <Paper
+      className={classes.paper}
+      style={{ height: windowHeight - 210 }}
+      square
+    >
+      <div style={{ padding: "10px 20px" }}>
+        <Button
+          variant="contained"
+          color="primary"
+          size="large"
+          startIcon={<PictureAsPdfIcon />}
+          // disabled={selectedData.length === 0}
+          disabled
+          style={{ marginRight: "10px" }}
+          // className={classes.button}
+          // startIcon={<SaveIcon />}
+          // onClick={() => {
+          //   setIsShowSaveConfirm(true);
+          // }}
+        >
+          一括PDF出力
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          size="large"
+          startIcon={<GridOnIcon />}
+          disabled={selectedData.length === 0}
+          // className={classes.button}
+          // startIcon={<SaveIcon />}
+          onClick={bulkOutputExcel}
+        >
+          一括EXCEL出力
+        </Button>
+      </div>
       <TableContainer>
         <Table
           className={classes.table}
@@ -676,69 +694,5 @@ function EnhancedTableHead(props) {
     </TableHead>
   );
 }
-
-const useToolbarStyles = makeStyles((theme) =>
-  createStyles({
-    root: {
-      paddingLeft: theme.spacing(2),
-      paddingRight: theme.spacing(1),
-    },
-    highlight:
-      theme.palette.type === "light"
-        ? {
-            color: theme.palette.secondary.main,
-            backgroundColor: lighten(theme.palette.secondary.light, 0.85),
-          }
-        : {
-            color: theme.palette.text.primary,
-            backgroundColor: theme.palette.secondary.dark,
-          },
-    title: {
-      flex: "1 1 100%",
-    },
-  })
-);
-
-const EnhancedTableToolbar = (props) => {
-  const classes = useToolbarStyles();
-  const { selectedData, bulkOutputExcel } = props;
-
-  return (
-    <Toolbar
-      className={clsx(classes.root, {
-        [classes.highlight]: selectedData.length > 0,
-      })}
-    >
-      <Button
-        variant="contained"
-        color="primary"
-        size="large"
-        startIcon={<PictureAsPdfIcon />}
-        // disabled={selectedData.length === 0}
-        disabled
-        style={{ marginRight: "10px" }}
-        // className={classes.button}
-        // startIcon={<SaveIcon />}
-        // onClick={() => {
-        //   setIsShowSaveConfirm(true);
-        // }}
-      >
-        一括PDF出力
-      </Button>
-      <Button
-        variant="contained"
-        color="primary"
-        size="large"
-        startIcon={<GridOnIcon />}
-        disabled={selectedData.length === 0}
-        // className={classes.button}
-        // startIcon={<SaveIcon />}
-        onClick={bulkOutputExcel}
-      >
-        一括EXCEL出力
-      </Button>
-    </Toolbar>
-  );
-};
 
 export default ApprovedList;

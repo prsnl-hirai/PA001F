@@ -38,6 +38,9 @@ let theme = createTheme({
       main: "#009be5",
       dark: "#006db3",
     },
+    secondary: {
+      main: "#f50054",
+    },
   },
   typography: {
     h5: {

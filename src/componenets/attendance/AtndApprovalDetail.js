@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef, FC } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { styled } from "@mui/material/styles";
-import { makeStyles } from "@material-ui/core/styles";
+import { styled, makeStyles } from "@mui/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
@@ -9,23 +8,23 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
 import Box from "@mui/material/Box";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import Typography from "@material-ui/core/Typography";
+import CircularProgress from "@mui/material/CircularProgress";
+import Typography from "@mui/material/Typography";
 
 // icon
 import IconButton from "@mui/material/IconButton";
-import Block from "@material-ui/icons/Block";
-import CheckIcon from "@material-ui/icons/Check";
-import KeyboardReturnIcon from "@material-ui/icons/KeyboardReturn";
-import CreateRoundedIcon from "@mui/icons-material/Delete";
+import BlockIcon from "@mui/icons-material/Block";
+import CheckIcon from "@mui/icons-material/Check";
+import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
+import CreateRoundedIcon from "@mui/icons-material/CreateRounded";
 import DescriptionIcon from "@mui/icons-material/Description";
 
 import * as CONST from "../../common/const";
@@ -277,7 +276,7 @@ const AtndApprovalDetail = () => {
                 color="secondary"
                 size="large"
                 className={classes.button}
-                startIcon={<Block />}
+                startIcon={<BlockIcon />}
                 onClick={() => {
                   setIsShowRemandConfirm(true);
                 }}

@@ -3,7 +3,7 @@ export default function Info() {
   // const [message, setMessage] = useState("");
   // useEffect(() => {
   //   //fetchでバックエンドExpressのサーバーを指定
-  //   fetch("/info")
+  //   fetch(process.env.REACT_APP_BACKEND_URL + "/info")
   //     //レスポンスをjsonとして受け取りjsオブジェクトを生成
   //     .then((res) => res.json())
   //     //生成したjsオブジェクトをdataに代入

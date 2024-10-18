@@ -26,7 +26,7 @@ import SaveIcon from "@mui/icons-material/Save";
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import DeleteIcon from "@mui/icons-material/Delete";
-import CreateRoundedIcon from "@mui/icons-material/Delete";
+import CreateRoundedIcon from "@mui/icons-material/CreateRounded";
 import DescriptionIcon from "@mui/icons-material/Description";
 
 import * as CONST from "../../common/const";
@@ -239,6 +239,7 @@ const AtndRegist = () => {
             isHoliday: isHoliday,
             isToday: isToday,
             fontColorCls: fontColorCls,
+            isMinus: false,
           };
 
           if (registeredata.length > 0) {
@@ -259,6 +260,7 @@ const AtndRegist = () => {
                 isHoliday: isHoliday,
                 isToday: isToday,
                 fontColorCls: fontColorCls,
+                isMinus: false,
               };
               result.push(data);
             } else {
@@ -366,6 +368,7 @@ const AtndRegist = () => {
         );
         newData[index].workTime = transTime(time.workSec);
         newData[index].overTime = transTime(time.overSec);
+        newData[index].isMinus = time.isMinus;
         break;
       case 3:
         newData[index].endTime = value;
@@ -376,6 +379,7 @@ const AtndRegist = () => {
         );
         newData[index].workTime = transTime(time2.workSec);
         newData[index].overTime = transTime(time2.overSec);
+        newData[index].isMinus = time2.isMinus;
         break;
       case 4:
         newData[index].breakTime = value;
@@ -386,6 +390,7 @@ const AtndRegist = () => {
         );
         newData[index].workTime = transTime(time3.workSec);
         newData[index].overTime = transTime(time3.overSec);
+        newData[index].isMinus = time3.isMinus;
         break;
       case 5:
         newData[index].paid = value;
@@ -407,6 +412,7 @@ const AtndRegist = () => {
         newData[index].remarks = "";
         break;
     }
+    console.log(newData[index]);
     setDiligenceData(newData);
   };
 
@@ -475,6 +481,7 @@ const AtndRegist = () => {
         newData[i].workTime = transTime(time.workSec);
         newData[i].overTime = transTime(time.overSec);
         newData[i].paid = bulkPaid;
+        newData[i].isMinus = time.isMinus;
       }
     }
     setDiligenceData(newData);
@@ -524,9 +531,15 @@ const AtndRegist = () => {
           <TextField
             type="month"
             value={`${dispYear}-${dispMonth}`}
-            inputProps={{
-              min: `${sysUseStartYear}-${sysUseStartMonth}`,
+            slotProps={{
+              input: {
+                style: {
+                  backgroundColor: "#f0f0f0",
+                },
+                min: `${sysUseStartYear}-${sysUseStartMonth}`,
+              },
             }}
+            size="small"
             onChange={(e) => {
               if (e.target.value === "") return;
               let date = e.target.value.split("-");
@@ -733,8 +746,15 @@ const AtndRegist = () => {
             <TextField
               type="time"
               label="開始時間"
-              InputLabelProps={{
-                shrink: true,
+              slotProps={{
+                input: {
+                  style: {
+                    backgroundColor: "#f0f0f0",
+                  },
+                },
+                inputLabel: {
+                  shrink: true,
+                },
               }}
               value={bulkStartTime}
               onChange={(e) => {
@@ -747,8 +767,15 @@ const AtndRegist = () => {
             <TextField
               type="time"
               label="終了時間"
-              InputLabelProps={{
-                shrink: true,
+              slotProps={{
+                input: {
+                  style: {
+                    backgroundColor: "#f0f0f0",
+                  },
+                },
+                inputLabel: {
+                  shrink: true,
+                },
               }}
               value={bulkEndTime}
               onChange={(e) => {
@@ -761,8 +788,15 @@ const AtndRegist = () => {
             <TextField
               type="time"
               label="休憩時間"
-              InputLabelProps={{
-                shrink: true,
+              slotProps={{
+                input: {
+                  style: {
+                    backgroundColor: "#f0f0f0",
+                  },
+                },
+                inputLabel: {
+                  shrink: true,
+                },
               }}
               value={bulkBreakTime}
               onChange={(e) => {
@@ -775,8 +809,15 @@ const AtndRegist = () => {
             <TextField
               type="time"
               label="有給"
-              InputLabelProps={{
-                shrink: true,
+              slotProps={{
+                input: {
+                  style: {
+                    backgroundColor: "#f0f0f0",
+                  },
+                },
+                inputLabel: {
+                  shrink: true,
+                },
               }}
               value={bulkPaid}
               onChange={(e) => {
@@ -899,49 +940,62 @@ const AtndRegist = () => {
                         <TextField
                           type="time"
                           value={data.startTime}
-                          inputProps={{
-                            step: 1800,
-                          }}
-                          InputLabelProps={{
-                            shrink: true,
+                          slotProps={{
+                            inputLabel: {
+                              shrink: true,
+                            },
+                            input: {
+                              step: 1800,
+                            },
                           }}
                           onChange={(e) => {
                             updateData(data.day, 2, e.target.value);
                           }}
+                          size="small"
                         />
                       </StyledTableCell>
                       <StyledTableCell>
                         <TextField
                           type="time"
                           value={data.endTime}
-                          inputProps={{
-                            step: 1800,
-                          }}
-                          InputLabelProps={{
-                            shrink: true,
+                          slotProps={{
+                            inputLabel: {
+                              shrink: true,
+                            },
+                            input: {
+                              step: 1800,
+                            },
                           }}
                           onChange={(e) => {
                             updateData(data.day, 3, e.target.value);
                           }}
+                          size="small"
                         />
                       </StyledTableCell>
                       <StyledTableCell style={{}}>
                         <TextField
                           type="time"
                           value={data.breakTime}
-                          inputProps={{
-                            step: 1800,
-                          }}
-                          InputLabelProps={{
-                            shrink: true,
+                          slotProps={{
+                            inputLabel: {
+                              shrink: true,
+                            },
+                            input: {
+                              step: 1800,
+                            },
                           }}
                           onChange={(e) => {
                             updateData(data.day, 4, e.target.value);
                           }}
+                          size="small"
                         />
                       </StyledTableCell>
                       <StyledTableCell>
-                        <div className={classes.approvedText}>
+                        <div
+                          className={`classes.approvedText ${
+                            data.isMinus && classes.redCell
+                          }`}
+                        >
                           {data.workTime === "" ? "　" : data.workTime}
                         </div>
                       </StyledTableCell>
@@ -954,15 +1008,18 @@ const AtndRegist = () => {
                         <TextField
                           type="time"
                           value={data.paid}
-                          inputProps={{
-                            step: 1800,
-                          }}
-                          InputLabelProps={{
-                            shrink: true,
+                          slotProps={{
+                            inputLabel: {
+                              shrink: true,
+                            },
+                            input: {
+                              step: 1800,
+                            },
                           }}
                           onChange={(e) => {
                             updateData(data.day, 5, e.target.value);
                           }}
+                          size="small"
                         />
                       </StyledTableCell>
                       <StyledTableCell>
@@ -970,12 +1027,15 @@ const AtndRegist = () => {
                           type="number"
                           className={classes.textBox}
                           value={data.transExp === 0 ? "" : data.transExp}
-                          InputLabelProps={{
-                            shrink: true,
+                          slotProps={{
+                            inputLabel: {
+                              shrink: true,
+                            },
                           }}
                           onChange={(e) => {
                             updateData(data.day, 6, e.target.value);
                           }}
+                          size="small"
                         />
                       </StyledTableCell>
                       <StyledTableCell
@@ -989,12 +1049,15 @@ const AtndRegist = () => {
                         <TextField
                           className={classes.textBox}
                           value={data.remarks}
-                          InputLabelProps={{
-                            shrink: true,
+                          slotProps={{
+                            inputLabel: {
+                              shrink: true,
+                            },
                           }}
                           onChange={(e) => {
                             updateData(data.day, 7, e.target.value);
                           }}
+                          size="small"
                         />
                       </StyledTableCell>
                       <StyledTableCell
