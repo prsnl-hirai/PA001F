@@ -96,11 +96,19 @@ export default function SignIn(props) {
         }),
       };
 
-      // fetch("/saveLoginInfo", requestOptions)
+      /** パスワード変更 */
+      // fetch(
+      //   process.env.REACT_APP_BACKEND_URL + "/updatePassword",
+      //   requestOptions
+      // )
       //   .then((res) => res.json())
+      //   .then((json) => {
+      //     alert("パスワードを変更しました");
+      //   })
       //   .catch((error) => {
       //     console.error("Error fetching data:", error);
       //   });
+
       fetch(process.env.REACT_APP_BACKEND_URL + "/getUserInfo", requestOptions)
         .then((res) => res.json())
         .then((json) => {
